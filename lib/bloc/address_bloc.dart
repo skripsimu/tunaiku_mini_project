@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 
-enum Address { RUMAH, KANTOR }
+enum Address { Rumah, Kantor }
 
 class AddressBloc extends Bloc<Address, String> {
   String _address;
@@ -9,7 +9,7 @@ class AddressBloc extends Bloc<Address, String> {
 
   @override
   Stream<String> mapEventToState(Address event) async* {
-    _address = (event == Address.RUMAH) ? "RUMAH" : "KANTOR";
+    _address = (event == Address.Rumah) ? "RUMAH" : "KANTOR";
     yield _address;
   }
 }

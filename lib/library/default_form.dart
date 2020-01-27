@@ -9,6 +9,7 @@ class DefaultForm {
     int maxLength,
     TextInputType keyboardType,
     TextEditingController textController,
+    TextCapitalization textCapitalization,
   }) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Container(
@@ -29,6 +30,7 @@ class DefaultForm {
         child: TextFormField(
           controller: textController,
           keyboardType: keyboardType,
+          textCapitalization: textCapitalization == null ? TextCapitalization.sentences : textCapitalization,
           inputFormatters: [
             LengthLimitingTextInputFormatter(maxLength),
           ],

@@ -135,6 +135,8 @@ class PersonalData {
                     function: () {
                       if (_noKtp.text.length == 0) {
                         customToast.showToast(msg: "No KTP tidak boleh kosong");
+                      } else if (_noKtp.text.length < 16) {
+                        customToast.showToast(msg: "Masukan no ktp yang valid");
                       } else if (_namaLengkap.text.length == 0) {
                         customToast.showToast(msg: "Nama tidak boleh kosong");
                       } else if (_noRekening.text.length == 0) {
@@ -157,7 +159,7 @@ class PersonalData {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ],
