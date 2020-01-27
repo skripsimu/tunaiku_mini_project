@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tunaiku_mini_project/bloc/education_bloc.dart';
 import 'package:tunaiku_mini_project/library/initial.dart';
-import 'package:wave/config.dart';
-import 'package:wave/wave.dart';
 
 import '../../bloc/education_bloc.dart';
+import '../../library/initial.dart';
+import '../../ui/ktp_page.dart';
 
 class PersonalData {
   TextEditingController _noKtp = TextEditingController();
@@ -18,27 +18,7 @@ class PersonalData {
     EducationBloc bloc = BlocProvider.of<EducationBloc>(context);
     return Stack(
       children: <Widget>[
-        Container(
-          height: MediaQuery.of(context).size.height,
-          child: RotatedBox(
-            quarterTurns: 2,
-            child: WaveWidget(
-              config: CustomConfig(
-                gradients: [
-                  [colorLib.greenShade, colorLib.green],
-                  [colorLib.greenHc, colorLib.greenShade]
-                ],
-                durations: [19440, 10800],
-                heightPercentages: [0.20, 0.25],
-                blur: MaskFilter.blur(BlurStyle.solid, 10),
-                gradientBegin: Alignment.bottomLeft,
-                gradientEnd: Alignment.topRight,
-              ),
-              waveAmplitude: 0,
-              size: Size(double.infinity, double.infinity),
-            ),
-          ),
-        ),
+        waveView.body(context),
         ListView(
           children: <Widget>[
             Container(
@@ -170,7 +150,8 @@ class PersonalData {
                         customToast.showToast(
                             msg: "Tanggal lahir tidak boleh kosong");
                       } else {
-                        customToast.showToast(msg: "SUKSESSSSS");
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => KtpPage()));
                       }
                     },
                   ),
