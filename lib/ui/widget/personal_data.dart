@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tunaiku_mini_project/bloc/education_bloc.dart';
 import 'package:tunaiku_mini_project/library/initial.dart';
-import 'package:tunaiku_mini_project/services/list_pendidikan.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
+
+import '../../bloc/education_bloc.dart';
 
 class PersonalData {
   TextEditingController _noKtp = TextEditingController();
@@ -12,7 +13,7 @@ class PersonalData {
   TextEditingController _noRekening = TextEditingController();
   TextEditingController _tanggalLahir = TextEditingController();
 
-  String dropdownValue;
+  Education dropdownValue;
   body(BuildContext context) {
     EducationBloc bloc = BlocProvider.of<EducationBloc>(context);
     return Stack(
@@ -109,7 +110,7 @@ class PersonalData {
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: BlocBuilder<EducationBloc, String>(
-                              builder: (context, getPendidikan) =>
+                              builder: (context, getEducation) =>
                                   DropdownButton(
                                 isExpanded: true,
                                 hint: Container(
@@ -121,15 +122,20 @@ class PersonalData {
                                   ),
                                 ),
                                 underline: Container(),
-                                items: listPendidikan.map((item) {
+                                items: Education.values.map((item) {
                                   return DropdownMenuItem(
-                                    child: Text(item.pendidikan),
-                                    value: item.pendidikan,
+                                    child: Text(item
+                                        .toString()
+                                        .toString()
+                                        .substring(10, item.toString().length)),
+                                    value: item,
                                   );
                                 }).toList(),
                                 onChanged: (value) {
+                                  print(value);
                                   bloc.add(value);
                                   dropdownValue = value;
+                                  print(getEducation);
                                 },
                                 value: dropdownValue,
                               ),
@@ -147,7 +153,6 @@ class PersonalData {
                   defaultButton.getButton(
                     title: "Submit",
                     function: () {
-                      print(dropdownValue);
                       if (_noKtp.text.length == 0) {
                         customToast.showToast(msg: "No KTP tidak boleh kosong");
                       } else if (_namaLengkap.text.length == 0) {
