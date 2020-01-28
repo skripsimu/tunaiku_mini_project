@@ -4,6 +4,7 @@ import 'package:tunaiku_mini_project/bloc/address_bloc.dart';
 import 'package:tunaiku_mini_project/bloc/dropdown_province_bloc.dart';
 import 'package:tunaiku_mini_project/bloc/province_bloc.dart';
 import 'package:tunaiku_mini_project/model/province_model.dart';
+import 'package:tunaiku_mini_project/ui/review.dart';
 
 import '../../library/initial.dart';
 
@@ -13,7 +14,14 @@ class KtpView {
 
   Address _dropdownValue;
   String _provinceValue;
-  body(BuildContext context) {
+  body({
+    BuildContext context,
+    String noKtp,
+    String nama,
+    String noRekening,
+    String pendidikan,
+    String tanggalLahir,
+  }) {
     AddressBloc bloc = BlocProvider.of<AddressBloc>(context);
     DropDownProvince blprov = BlocProvider.of<DropDownProvince>(context);
     return Stack(children: [
@@ -179,7 +187,40 @@ class KtpView {
                 SizedBox(
                   height: 20,
                 ),
-                defaultButton.getButton(title: "Submit", function: () {}),
+                defaultButton.getButton(
+                    title: "Submit",
+                    function: () {
+                      print(_blok.toString());
+                      if (_alamat.text.length == 0) {
+                        customToast.showToast(msg: "Alamat tidak boleh kosong");
+                      } else if (_dropdownValue == null) {
+                        customToast.showToast(
+                            msg: "Tipe alamat tidak boleh kosong");
+                      } else if (_blok.text.length == 0) {
+                        customToast.showToast(msg: "Blok tidak boleh kosong");
+                      } else if (_provinceValue == null) {
+                        customToast.showToast(
+                            msg: "Provinsi tidak boleh kosong");
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Review(
+                                      nama: nama,
+                                      noKtp: noKtp,
+                                      noRekening: noRekening,
+                                      pendidikan: pendidikan,
+                                      tanggalLahir: tanggalLahir,
+                                      alamat: _alamat.text,
+                                      blok: _blok.text,
+                                      provinsi: _provinceValue,
+                                      tipeAlamat: _dropdownValue
+                                          .toString()
+                                          .substring(8,
+                                              _dropdownValue.toString().length),
+                                    )));
+                      }
+                    }),
               ],
             ),
           ),

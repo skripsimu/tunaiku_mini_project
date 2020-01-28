@@ -20,7 +20,14 @@ class KtpPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: ktpView.body(context),
+        child: ktpView.body(
+          context: context,
+          nama: nama,
+          noKtp: noKtp,
+          noRekening: noRekening,
+          pendidikan: pendidikan,
+          tanggalLahir: tanggalLahir,
+        ),
       ),
     );
   }

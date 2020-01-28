@@ -10,8 +10,8 @@ class ProvinceBloc extends Bloc<int, List<ProvinceModel>> {
   @override
   Stream<List<ProvinceModel>> mapEventToState(int event) async* {
     try {
-      List<ProvinceModel> province = await provinceServices.getProvince();
-      yield province;
+      List<ProvinceModel> _province = await provinceServices.getProvince();
+      yield _province;
     } catch (_) {}
   }
 }
