@@ -1,6 +1,14 @@
 # tunaiku_mini_project
 
-A new Flutter project.
+Tunaiku Mini Project.
+Aplikasi ini menggunakan:
+
+  - wave: ^0.0.8
+  - datetime_picker_formfield: ^1.0.0
+  - bloc: ^3.0.0
+  - flutter_bloc: ^3.1.0
+  - http: ^0.12.0+4
+  - fluttertoast: ^3.1.3
 
 ## Getting Started
 
