@@ -127,7 +127,7 @@ class KtpView {
                           bottom: 5,
                         ),
                         child: Text(
-                          "Tipe Alamat",
+                          "Provinsi",
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -164,8 +164,10 @@ class KtpView {
                                   );
                                 }).toList(),
                                 onChanged: (value) {
-                                  blprov.add(value);
                                   _provinceValue = value;
+                                  print("pendidikn $getPendidikan");
+                                  print(value);
+                                  blprov.add(value);
                                 },
                                 value: _provinceValue,
                               ),
