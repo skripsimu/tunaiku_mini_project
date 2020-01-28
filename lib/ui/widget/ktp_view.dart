@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tunaiku_mini_project/bloc/address_bloc.dart';
+import 'package:tunaiku_mini_project/bloc/dropdown_province_bloc.dart';
+import 'package:tunaiku_mini_project/bloc/province_bloc.dart';
+import 'package:tunaiku_mini_project/model/province_model.dart';
 
-import '../../library/initial.dart';
-import '../../library/initial.dart';
 import '../../library/initial.dart';
 
 class KtpView {
@@ -11,8 +12,10 @@ class KtpView {
   TextEditingController _blok = TextEditingController();
 
   Address _dropdownValue;
+  String _provinceValue;
   body(BuildContext context) {
     AddressBloc bloc = BlocProvider.of<AddressBloc>(context);
+    DropDownProvince blprov = BlocProvider.of<DropDownProvince>(context);
     return Stack(children: [
       waveView.body(context),
       ListView(
@@ -40,6 +43,7 @@ class KtpView {
                   hint: "Masukan alamat anda",
                   maxLength: 100,
                   keyboardType: TextInputType.text,
+                  digitsOnly: false,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,6 +113,66 @@ class KtpView {
                   textController: _blok,
                   title: "Blok",
                   textCapitalization: TextCapitalization.characters,
+                  digitsOnly: false,
+                ),
+                BlocBuilder<ProvinceBloc, List<ProvinceModel>>(
+                  builder: (context, province) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(
+                          left: 60,
+                          right: 60,
+                          top: 20,
+                          bottom: 5,
+                        ),
+                        child: Text(
+                          "Tipe Alamat",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      Card(
+                          margin: EdgeInsets.only(left: 40, right: 40),
+                          elevation: 11,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(40))),
+                          child: Container(
+                            padding: EdgeInsets.only(left: 20, right: 30),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.transparent),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: BlocBuilder<DropDownProvince, String>(
+                              builder: (context, getPendidikan) =>
+                                  DropdownButton(
+                                isExpanded: true,
+                                hint: Container(
+                                  child: Text(
+                                    "Pilih tingkat pendidikan",
+                                    style: TextStyle(
+                                      color: Colors.black26,
+                                    ),
+                                  ),
+                                ),
+                                underline: Container(),
+                                items: province.map((item) {
+                                  return DropdownMenuItem(
+                                    child: Text(item.name),
+                                    value: item.name,
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  blprov.add(value);
+                                  _provinceValue = value;
+                                },
+                                value: _provinceValue,
+                              ),
+                            ),
+                          )),
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 20,
@@ -128,6 +192,7 @@ class KtpView {
             _alamat.text = "";
             _blok.text = "";
             _dropdownValue = null;
+            _provinceValue = null;
           },
           shape: CircleBorder(),
           fillColor: Colors.red,

@@ -10,6 +10,7 @@ class DefaultForm {
     TextInputType keyboardType,
     TextEditingController textController,
     TextCapitalization textCapitalization,
+    bool digitsOnly,
   }) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Container(
@@ -30,9 +31,14 @@ class DefaultForm {
         child: TextFormField(
           controller: textController,
           keyboardType: keyboardType,
-          textCapitalization: textCapitalization == null ? TextCapitalization.sentences : textCapitalization,
+          textCapitalization: textCapitalization == null
+              ? TextCapitalization.sentences
+              : textCapitalization,
           inputFormatters: [
             LengthLimitingTextInputFormatter(maxLength),
+            (digitsOnly)
+                ? WhitelistingTextInputFormatter.digitsOnly
+                : BlacklistingTextInputFormatter.singleLineFormatter,
           ],
           maxLengthEnforced: true,
           decoration: InputDecoration(

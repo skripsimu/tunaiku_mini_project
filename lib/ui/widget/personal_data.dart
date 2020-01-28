@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tunaiku_mini_project/bloc/education_bloc.dart';
+import 'package:tunaiku_mini_project/bloc/province_bloc.dart';
 import 'package:tunaiku_mini_project/library/initial.dart';
 
 import '../../bloc/education_bloc.dart';
@@ -16,6 +18,7 @@ class PersonalData {
   Education dropdownValue;
   body(BuildContext context) {
     EducationBloc bloc = BlocProvider.of<EducationBloc>(context);
+    ProvinceBloc blProv = BlocProvider.of<ProvinceBloc>(context);
     return Stack(
       children: <Widget>[
         waveView.body(context),
@@ -44,6 +47,7 @@ class PersonalData {
                     hint: "Masukan 16 nomor KTP anda",
                     maxLength: 16,
                     keyboardType: TextInputType.number,
+                    digitsOnly: true,
                   ),
                   defaultForm.getForm(
                     title: "Nama Lengkap",
@@ -52,6 +56,7 @@ class PersonalData {
                     hint: "Masukan nama lengkap anda",
                     maxLength: 10,
                     keyboardType: TextInputType.text,
+                    digitsOnly: false,
                   ),
                   defaultForm.getForm(
                     title: "Nomor Rekening",
@@ -60,6 +65,7 @@ class PersonalData {
                     hint: "Masukan nomor rekening anda",
                     maxLength: 255,
                     keyboardType: TextInputType.number,
+                    digitsOnly: true,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,8 +158,20 @@ class PersonalData {
                         customToast.showToast(
                             msg: "Tanggal lahir tidak boleh kosong");
                       } else {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => KtpPage()));
+                        blProv.add(1);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => KtpPage(
+                                      noKtp: _noKtp.text,
+                                      nama: _namaLengkap.text,
+                                      noRekening: _noRekening.text,
+                                      pendidikan: dropdownValue
+                                          .toString()
+                                          .substring(10,
+                                              dropdownValue.toString().length),
+                                      tanggalLahir: _tanggalLahir.text,
+                                    )));
                       }
                     },
                   ),

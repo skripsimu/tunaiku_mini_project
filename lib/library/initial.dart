@@ -4,6 +4,7 @@ import 'package:tunaiku_mini_project/library/default_button.dart';
 import 'package:tunaiku_mini_project/library/default_form.dart';
 import 'package:tunaiku_mini_project/library/show_toast.dart';
 import 'package:tunaiku_mini_project/library/wave_widget.dart';
+import 'package:tunaiku_mini_project/services/province_services.dart';
 import 'package:tunaiku_mini_project/ui/widget/ktp_view.dart';
 import 'package:tunaiku_mini_project/ui/widget/personal_data.dart';
 
@@ -15,3 +16,4 @@ PersonalData personalData = PersonalData();
 CustomToast customToast = CustomToast();
 WaveView waveView = WaveView();
 KtpView ktpView = KtpView();
+ProvinceServices provinceServices = ProvinceServices();
